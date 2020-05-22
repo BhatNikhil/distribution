@@ -47,7 +47,7 @@ func GetBlockResponseFromByteStream(headerlength int, byteStream []byte) (BlockR
 	header := string(byteStream[:headerlength])
 	blockKeys := strings.Split(header, seperator)[1:] //We have to get rid of empty character at beginning introduced by split
 	if Debug == true {
-		fmt.Println("Received byte stream: ", byteStream)
+		//fmt.Println("Received byte stream: ", byteStream)
 		fmt.Println("Received header: ", header)
 		fmt.Println("Receive header Bytes:", byteStream[:headerlength])
 
@@ -61,12 +61,10 @@ func GetBlockResponseFromByteStream(headerlength int, byteStream []byte) (BlockR
 	counter := 0
 	for _, blockKey := range blockKeys {
 		if blockKey == "0" {
-			fmt.Println("Got block key zero")
 			startIndex, endIndex := BlockIndices(counter, len(blockCodeStream))
 			b.AddBlock(blockCodeStream[startIndex:endIndex], "0")
 			counter++
 		} else {
-			fmt.Println("Got block key:", blockKey)
 			b.AddBlock(nil, blockKey)
 		}
 	}
